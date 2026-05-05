@@ -1,0 +1,526 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Community Detail — RC-07 Robotics (Comprehensive)</title>
+<style>
+/* Base & Typography */
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: 'Segoe UI', system-ui, sans-serif; background: #f8f8f7; color: #1a1a18; font-size: 13px; padding: 16px; overflow-y: scroll; }
+.pg { display: flex; flex-direction: column; gap: 16px; max-width: 1240px; margin: 0 auto; }
+.sec { font-size: 11px; font-weight: 700; color: #888; letter-spacing: .05em; text-transform: uppercase; margin-bottom: 8px; }
+.sec-header { display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 8px; }
+.divider { height: 1px; background: #e8e8e5; margin: 4px 0; }
+button { font-family: inherit; }
+
+/* Buttons */
+.btn-primary { padding: 9px 16px; border-radius: 8px; background: #0F6E56; border: none; color: #fff; font-size: 12px; font-weight: 600; cursor: pointer; transition: background .15s; }
+.btn-primary:hover { background: #085041; }
+.btn-sec { padding: 8px 16px; border-radius: 8px; background: #fff; border: 1px solid #0F6E56; color: #0F6E56; font-size: 12px; font-weight: 600; cursor: pointer; transition: all .15s; }
+.btn-sec:hover { background: #E1F5EE; }
+.btn-micro { padding: 3px 8px; border-radius: 6px; border: 1px solid #ddd; background: #fff; font-size: 10px; cursor: pointer; font-weight: 600; color: #333; }
+.btn-micro.action { border-color: #0F6E56; color: #0F6E56; }
+
+/* Community Identity Header */
+.ch { background: #E1F5EE; border: 1px solid #9FE1CB; border-radius: 12px; padding: 18px 20px; display: flex; gap: 20px; flex-wrap: wrap; position: relative; overflow: hidden; }
+.ch-dec { position: absolute; top: -50px; right: -20px; font-size: 200px; color: #0F6E5608; pointer-events: none; font-weight: 800; line-height: 1; }
+.ch-left { flex: 1; min-width: 280px; z-index: 1; }
+.ch-badge { font-size: 9px; font-weight: 700; padding: 3px 9px; border-radius: 8px; background: #0F6E5625; color: #04342C; display: inline-block; margin-bottom: 6px; letter-spacing: .04em; }
+.ch-title { font-size: 24px; font-weight: 700; color: #04342C; line-height: 1.1; }
+.ch-sub { font-size: 11px; color: #0F6E56; margin-top: 4px; font-weight: 500; }
+.ch-metrics { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 12px; }
+.cm { padding: 10px 14px; border-radius: 9px; text-align: center; background: #fff; border: 1px solid #9FE1CB; flex: 1; min-width: 90px; }
+.cm-val { font-size: 19px; font-weight: 700; color: #0F6E56; }
+.cm-lbl { font-size: 9px; color: #666; margin-top: 2px; text-transform: uppercase; letter-spacing: .02em; }
+
+/* Performance Rating Box */
+.ch-rating { background: #fff; border: 1px solid #9FE1CB; border-radius: 10px; padding: 14px 18px; min-width: 220px; z-index: 1; display: flex; flex-direction: column; justify-content: center; }
+.rat-top { display: flex; align-items: flex-end; gap: 8px; margin-bottom: 8px; }
+.rat-score { font-size: 28px; font-weight: 700; color: #111; line-height: 1; }
+.rat-stars { color: #BA7517; font-size: 16px; margin-bottom: 3px; }
+.rat-lbl { font-size: 10px; font-weight: 600; color: #888; text-transform: uppercase; }
+.rat-bar-row { display: flex; align-items: center; gap: 8px; margin-top: 4px; }
+.rat-bar-lbl { font-size: 9px; color: #666; width: 60px; }
+.rat-bar-bg { flex: 1; height: 4px; background: #f0f0ed; border-radius: 2px; overflow: hidden; }
+.rat-bar-fill { height: 100%; border-radius: 2px; background: #0F6E56; }
+
+/* Target & Mandate Dashboard */
+.target-dash { background: #fff; border: 1px solid #e0e0dc; border-radius: 12px; padding: 16px; display: grid; grid-template-columns: 280px 1fr; gap: 20px; }
+.td-left { border-right: 1px solid #f0f0ed; padding-right: 20px; display: flex; flex-direction: column; justify-content: center; }
+.td-title { font-size: 14px; font-weight: 700; color: #111; margin-bottom: 4px; }
+.td-sub { font-size: 10px; color: #888; margin-bottom: 12px; }
+.wk-target { background: #f5f5f3; padding: 10px; border-radius: 8px; }
+.wk-head { display: flex; justify-content: space-between; font-size: 11px; font-weight: 600; margin-bottom: 6px; }
+.wk-bar-bg { height: 6px; background: #e0e0dc; border-radius: 3px; overflow: hidden; }
+.wk-bar-fill { height: 100%; background: #0F6E56; border-radius: 3px; transition: width 0.3s; }
+.td-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); gap: 10px; }
+.mandate-card { padding: 10px; border: 1px solid #f0f0ed; border-radius: 8px; background: #fafafa; position: relative; }
+.mandate-card.done { background: #EAF3DE; border-color: #C0DD97; }
+.mc-icon { position: absolute; top: 10px; right: 10px; font-size: 14px; }
+.mc-name { font-size: 11px; font-weight: 600; color: #333; margin-bottom: 2px; }
+.mc-stat { font-size: 18px; font-weight: 700; color: #111; }
+.mc-req { font-size: 9px; color: #888; text-transform: uppercase; }
+
+/* Leadership Band */
+.lband { display: flex; flex-direction: column; gap: 10px; }
+.ltop { display: flex; justify-content: center; }
+.lrest { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 10px; }
+.lcard { background: #fff; border: 1px solid #e0e0dc; border-radius: 11px; padding: 14px 16px; display: flex; flex-direction: column; align-items: center; gap: 6px; position: relative; transition: border-color .15s; }
+.lcard:hover { border-color: #9FE1CB; box-shadow: 0 4px 12px rgba(15,110,86,.08); }
+.lcard.cap { border-top: 4px solid #0F6E56; min-width: 220px; flex-direction: row; justify-content: center; gap: 20px; }
+.lcard.sub { border-top: 2px solid #5DCAA5; }
+.lphoto { border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 700; background: #E1F5EE; color: #0F6E56; }
+.lrole { font-size: 9px; font-weight: 700; padding: 2px 8px; border-radius: 8px; background: #0F6E5615; color: #0F6E56; text-transform: uppercase; }
+.lname { font-size: 13px; font-weight: 600; color: #111; text-align: center; }
+.lstats { display: flex; gap: 16px; margin-top: 4px; }
+.lstat { text-align: center; }
+.lsv { font-size: 14px; font-weight: 700; color: #111; }
+.lsl { font-size: 9px; color: #888; margin-top: 1px; }
+
+/* Weekly Sprint Planner */
+.planner-wrap { background: #fff; border: 1px solid #e0e0dc; border-radius: 12px; overflow: hidden; }
+.pw-head { display: flex; align-items: center; justify-content: space-between; padding: 12px 16px; background: #fafafa; border-bottom: 1px solid #e8e8e5; }
+.ptable { width: 100%; border-collapse: collapse; }
+.ptable th { text-align: left; padding: 10px 16px; font-size: 10px; font-weight: 700; color: #888; text-transform: uppercase; border-bottom: 1px solid #f0f0ed; }
+.ptable td { padding: 10px 16px; border-bottom: 1px solid #f0f0ed; font-size: 12px; vertical-align: middle; }
+.owner-chip { display: flex; align-items: center; gap: 6px; padding: 4px 8px; background: #f5f5f3; border-radius: 20px; width: max-content; font-size: 11px; font-weight: 500; border: 1px solid #e8e8e5; }
+.owner-pic { width: 18px; height: 18px; border-radius: 50%; background: #0F6E56; color: #fff; display: flex; align-items: center; justify-content: center; font-size: 8px; font-weight: 700; }
+.status-badge { padding: 3px 8px; border-radius: 6px; font-size: 10px; font-weight: 700; text-transform: uppercase; }
+.sb-draft { background: #f0f0ed; color: #666; }
+.sb-pending { background: #FAEEDA; color: #BA7517; border: 1px solid #FAC775; }
+.sb-booked { background: #EAF3DE; color: #3B6D11; border: 1px solid #C0DD97; }
+
+/* Activity Heatmap */
+.hmwrap { background: #fff; border: 1px solid #e0e0dc; border-radius: 12px; overflow: hidden; }
+.hmbar { display: flex; align-items: center; justify-content: space-between; gap: 10px; padding: 10px 14px; border-bottom: 1px solid #e8e8e5; background: #fafafa; }
+.dcscroll { overflow-x: auto; scrollbar-width: none; }
+.dcscroll::-webkit-scrollbar { display: none; }
+.dcs { display: flex; gap: 6px; width: max-content; }
+.dc { display: flex; flex-direction: column; align-items: center; padding: 4px 12px; border-radius: 8px; border: 1px solid #e0e0dc; background: #fff; cursor: pointer; min-width: 48px; transition: all .1s; }
+.dc .dd { font-size: 9px; color: #888; }
+.dc .dn { font-size: 13px; font-weight: 600; color: #111; }
+.dc.sel { background: #0F6E56; border-color: #0F6E56; }
+.dc.sel .dd, .dc.sel .dn { color: #fff; }
+.hmscroll { overflow-x: auto; scrollbar-width: thin; }
+.hmscroll::-webkit-scrollbar { height: 6px; }
+.hmscroll::-webkit-scrollbar-thumb { background: #ccc; border-radius: 3px; }
+table.hmt { border-collapse: collapse; min-width: 700px; width: 100%; }
+.hmcorner { padding: 10px 14px; background: #fafafa; border-bottom: 1px solid #e8e8e5; border-right: 1px solid #e8e8e5; font-size: 11px; color: #666; font-weight: 600; min-width: 150px; text-align: left; }
+.hmhth { padding: 8px 6px; background: #fafafa; border-bottom: 1px solid #e8e8e5; border-right: 1px solid #e8e8e5; text-align: center; min-width: 80px; font-size: 11px; font-weight: 600; color: #333; }
+.hmctd { padding: 8px 14px; font-size: 11px; font-weight: 500; color: #444; background: #fff; border-bottom: 1px solid #f0f0ed; border-right: 1px solid #e8e8e5; white-space: nowrap; vertical-align: middle; }
+.hmcell { border-bottom: 1px solid #f0f0ed; border-right: 1px solid #f0f0ed; padding: 4px; vertical-align: top; cursor: pointer; position: relative; background: #fff; }
+.hmblock { border-radius: 6px; height: 52px; display: flex; flex-direction: column; justify-content: center; padding: 0 8px; transition: opacity .15s; border: 1px solid transparent; }
+.hmblock:hover { opacity: .85; }
+.hm-ev-name { font-size: 10px; font-weight: 600; line-height: 1.2; overflow: hidden; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; }
+.hm-ev-pts { font-size: 9px; font-weight: 700; margin-top: auto; padding-top: 2px; }
+.hmempty { height: 52px; border-radius: 6px; background: transparent; transition: background .15s; }
+.hmempty:hover { background: #f5f5f3; border: 1px dashed #ccc; }
+.hmcell .tp { display: none; position: absolute; z-index: 50; background: #111; color: #fff; border-radius: 8px; padding: 10px 14px; font-size: 11px; white-space: nowrap; bottom: calc(100% + 5px); left: 50%; transform: translateX(-50%); pointer-events: none; min-width: 180px; box-shadow: 0 4px 16px rgba(0,0,0,.2); }
+.hmcell:hover .tp { display: block; }
+.hmcell .tp::after { content: ''; position: absolute; top: 100%; left: 50%; margin-left: -5px; border-width: 5px; border-style: solid; border-color: #111 transparent transparent transparent; }
+
+/* Member Grid */
+.mgrid { display: grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 10px; }
+.mcard { border-radius: 12px; padding: 12px 14px; display: flex; flex-direction: column; gap: 8px; cursor: pointer; position: relative; border: 1px solid #e0e0dc; background: #fff; transition: all .15s; }
+.mcard:hover { transform: translateY(-2px); box-shadow: 0 4px 12px rgba(0,0,0,.06); border-color: #bbb; }
+.m-tier-bar { position: absolute; left: 0; top: 12px; bottom: 12px; width: 4px; border-radius: 0 4px 4px 0; }
+.m-tier-bar.purple { background: #534AB7; }
+.m-tier-bar.blue { background: #185FA5; }
+.m-tier-bar.orange { background: #D85A30; }
+.mtop { display: flex; align-items: center; gap: 10px; padding-left: 6px; }
+.mpic { width: 34px; height: 34px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 700; background: #f5f5f3; color: #555; }
+.mname { font-size: 12px; font-weight: 600; color: #111; line-height: 1.2; }
+.msub { font-size: 9px; color: #888; }
+.mstats-row { display: flex; justify-content: space-between; padding-top: 6px; border-top: 1px solid #f0f0ed; }
+.ms-box { display: flex; flex-direction: column; gap: 1px; }
+.ms-val { font-size: 12px; font-weight: 700; color: #111; }
+.ms-lbl { font-size: 9px; color: #888; }
+
+/* Modal */
+.modal-ov { display: none; position: fixed; inset: 0; background: rgba(0,0,0,.5); z-index: 1000; align-items: flex-start; justify-content: center; padding-top: 40px; }
+.modal-ov.open { display: flex; }
+.modal { background: #fff; border-radius: 14px; width: 100%; max-width: 500px; box-shadow: 0 10px 40px rgba(0,0,0,.2); }
+.md-head { padding: 16px 20px; border-bottom: 1px solid #e8e8e5; display: flex; justify-content: space-between; align-items: center; background: #fafafa; border-radius: 14px 14px 0 0; }
+.md-title { font-size: 16px; font-weight: 700; color: #111; }
+.md-body { padding: 20px; display: flex; flex-direction: column; gap: 12px; }
+.form-grp { display: flex; flex-direction: column; gap: 6px; }
+.flbl { font-size: 10px; font-weight: 700; color: #666; text-transform: uppercase; }
+.finp { padding: 9px 12px; border: 1px solid #ccc; border-radius: 8px; font-size: 13px; font-family: inherit; outline: none; }
+.md-foot { padding: 16px 20px; border-top: 1px solid #e8e8e5; display: flex; justify-content: flex-end; gap: 10px; background: #fafafa; border-radius: 0 0 14px 14px; }
+</style>
+</head>
+<body>
+
+<div class="pg">
+
+  <div class="ch">
+    <div class="ch-dec">RC</div>
+    <div class="ch-left">
+      <span class="ch-badge">Robotics · Primary Skill</span>
+      <div class="ch-title">RC-07 Robotics</div>
+      <div class="ch-sub">Established 2021 &nbsp;·&nbsp; Skill Community</div>
+      <div class="ch-metrics">
+        <div class="cm"><div class="cm-val">14,250</div><div class="cm-lbl">Total Points</div></div>
+        <div class="cm"><div class="cm-val">#2</div><div class="cm-lbl">Skill Rank</div></div>
+        <div class="cm"><div class="cm-val">42</div><div class="cm-lbl">Members</div></div>
+        <div class="cm"><div class="cm-val">9</div><div class="cm-lbl">Avg Weekly Events</div></div>
+      </div>
+    </div>
+    
+    <div class="ch-rating">
+      <div class="rat-top">
+        <div class="rat-score">4.8</div>
+        <div>
+          <div class="rat-stars">★★★★★</div>
+          <div class="rat-lbl">Performance Rating</div>
+        </div>
+      </div>
+      <div class="rat-bar-row"><span class="rat-bar-lbl">Reliability</span><div class="rat-bar-bg"><div class="rat-bar-fill" style="width:96%;"></div></div></div>
+      <div class="rat-bar-row"><span class="rat-bar-lbl">Quality</span><div class="rat-bar-bg"><div class="rat-bar-fill" style="width:88%;"></div></div></div>
+      <div class="rat-bar-row"><span class="rat-bar-lbl">Frequency</span><div class="rat-bar-bg"><div class="rat-bar-fill" style="width:100%;"></div></div></div>
+    </div>
+  </div>
+
+  <div class="target-dash">
+    <div class="td-left">
+      <div class="td-title">Community Targets</div>
+      <div class="td-sub">Set by Super Admin</div>
+      <div class="wk-target">
+        <div class="wk-head"><span>Weekly Volume</span><span style="color:#0F6E56;">2 / 3 Events</span></div>
+        <div class="wk-bar-bg"><div class="wk-bar-fill" style="width:66%;"></div></div>
+        <div style="font-size:9px; color:#888; margin-top:4px;">Minimum 3 activities per week</div>
+      </div>
+    </div>
+    <div class="td-grid">
+      <div class="mandate-card done">
+        <div class="mc-icon">✅</div>
+        <div class="mc-name">Seminars</div>
+        <div class="mc-stat">2 <span style="font-size:12px;font-weight:500;color:#666;">/ 1</span></div>
+        <div class="mc-req">Per Month</div>
+      </div>
+      <div class="mandate-card">
+        <div class="mc-icon">⏳</div>
+        <div class="mc-name">Hackathon</div>
+        <div class="mc-stat">0 <span style="font-size:12px;font-weight:500;color:#666;">/ 1</span></div>
+        <div class="mc-req">Per Month</div>
+      </div>
+      <div class="mandate-card done">
+        <div class="mc-icon">✅</div>
+        <div class="mc-name">Project Review</div>
+        <div class="mc-stat">1 <span style="font-size:12px;font-weight:500;color:#666;">/ 1</span></div>
+        <div class="mc-req">Per Month</div>
+      </div>
+      <div class="mandate-card">
+        <div class="mc-icon">⏳</div>
+        <div class="mc-name">Guest Lecture</div>
+        <div class="mc-stat">0 <span style="font-size:12px;font-weight:500;color:#666;">/ 1</span></div>
+        <div class="mc-req">Per Month</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <div>
+    <div class="sec">Community Leadership</div>
+    <div class="lband">
+      <div class="ltop" id="ltop"></div>
+      <div class="lrest" id="lrest"></div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <div>
+    <div class="sec-header">
+      <div class="sec" style="margin:0;">Sprint Planner (Upcoming Week)</div>
+      <button class="btn-primary" onclick="document.getElementById('planModal').classList.add('open')">+ Draft New Activity</button>
+    </div>
+    <div class="planner-wrap">
+      <div class="pw-head">
+        <span style="font-size:12px; color:#666;">Plan activities and assign ownership before booking venues on the Heatmap.</span>
+      </div>
+      <table class="ptable">
+        <thead>
+          <tr>
+            <th>Activity Name</th>
+            <th>Target Category</th>
+            <th>Owner-of-Record</th>
+            <th>Proposed Date</th>
+            <th>Booking Status</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td style="font-weight:600;">Arduino Sensor Basics</td>
+            <td>Technical Event</td>
+            <td><div class="owner-chip"><div class="owner-pic">KR</div> Karthik Raj</div></td>
+            <td>Wed, 15th April</td>
+            <td><span class="status-badge sb-booked">Venue Approved</span></td>
+            <td><button class="btn-micro" disabled>Published</button></td>
+          </tr>
+          <tr>
+            <td style="font-weight:600;">Spring Hackathon Brief</td>
+            <td>Hackathon</td>
+            <td><div class="owner-chip"><div class="owner-pic">VP</div> Vijay Pillai</div></td>
+            <td>Fri, 17th April</td>
+            <td><span class="status-badge sb-pending">Awaiting Admin</span></td>
+            <td><button class="btn-micro">Edit</button></td>
+          </tr>
+          <tr>
+            <td style="font-weight:600;">Guest Industry Talk</td>
+            <td>Guest Lecture</td>
+            <td><div class="owner-chip" style="background:#fff;border-color:#F09595;color:#A32D2D;">Unassigned</div></td>
+            <td>TBD</td>
+            <td><span class="status-badge sb-draft">Draft</span></td>
+            <td><button class="btn-micro action">Assign & Book</button></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <div>
+    <div style="display:flex; justify-content: space-between; align-items: flex-end; margin-bottom: 8px;">
+      <div class="sec" style="margin:0;">Activity Heatmap & Venues</div>
+      <div style="font-size:11px; color:#0F6E56; font-weight:600; cursor:pointer;">Export Schedule Data</div>
+    </div>
+    <div class="hmwrap">
+      <div class="hmbar">
+        <div class="dcscroll"><div class="dcs" id="dcs"></div></div>
+        <div style="display:flex; gap: 8px; align-items: center;">
+          <span style="font-size:10px; color:#888;">Shade = Registered Students</span>
+          <div style="display:flex; gap: 2px;">
+            <div style="width:12px;height:12px;background:#9FE1CB;border-radius:2px;"></div>
+            <div style="width:12px;height:12px;background:#1D9E75;border-radius:2px;"></div>
+            <div style="width:12px;height:12px;background:#0F6E56;border-radius:2px;"></div>
+            <div style="width:12px;height:12px;background:#085041;border-radius:2px;"></div>
+          </div>
+        </div>
+      </div>
+      <div class="hmscroll"><table class="hmt" id="hmt"></table></div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <div>
+    <div style="display:flex; justify-content: space-between; align-items: flex-end; margin-bottom: 8px;">
+      <div class="sec" style="margin:0;">Members (38 Non-Leaders)</div>
+      <div style="display:flex; gap:10px;">
+        <span style="font-size:10px; color:#666; display:flex; align-items:center; gap:4px;"><div style="width:8px;height:8px;border-radius:50%;background:#534AB7;"></div>Purple</span>
+        <span style="font-size:10px; color:#666; display:flex; align-items:center; gap:4px;"><div style="width:8px;height:8px;border-radius:50%;background:#185FA5;"></div>Blue</span>
+        <span style="font-size:10px; color:#666; display:flex; align-items:center; gap:4px;"><div style="width:8px;height:8px;border-radius:50%;background:#D85A30;"></div>Orange</span>
+      </div>
+    </div>
+    <div class="mgrid" id="mgrid"></div>
+  </div>
+
+</div>
+
+<div class="modal-ov" id="planModal">
+  <div class="modal">
+    <div class="md-head">
+      <span class="md-title">Draft Activity & Assign Owner</span>
+      <button class="md-close" onclick="document.getElementById('planModal').classList.remove('open')">✕</button>
+    </div>
+    <div class="md-body">
+      <div class="form-grp"><label class="flbl">Activity Name</label><input type="text" class="finp" placeholder="e.g., Guest Lecture on Automation"></div>
+      
+      <div class="form-grp"><label class="flbl">Target Category (Mandate fulfillment)</label>
+        <select class="finp">
+          <option>Guest Lecture</option>
+          <option>Seminar</option>
+          <option>Hackathon</option>
+          <option>Project Review</option>
+        </select>
+      </div>
+
+      <div class="form-grp"><label class="flbl">Assign Owner-of-Record</label>
+        <select class="finp">
+          <option value="">-- Select Community Member --</option>
+          <option>Arjun Krishna</option>
+          <option>Vijay Pillai</option>
+          <option>Meena S.</option>
+        </select>
+        <span style="font-size:9px; color:#888;">Owner receives leadership points upon completion.</span>
+      </div>
+      
+      <div class="form-grp" style="margin-top: 10px; padding-top: 10px; border-top: 1px solid #eee;"><label class="flbl">Venue Request (Optional at Draft Stage)</label>
+        <select class="finp"><option>-- Save as Draft --</option><option>Innovation Hub (Cap: 80)</option><option>Lab Block 101 (Cap: 60)</option></select>
+      </div>
+    </div>
+    <div class="md-foot">
+      <button class="btn-sec" onclick="document.getElementById('planModal').classList.remove('open')">Cancel</button>
+      <button class="btn-primary" onclick="document.getElementById('planModal').classList.remove('open')">Save to Planner</button>
+    </div>
+  </div>
+</div>
+
+<script>
+// Utility Functions
+function r(a,b){return Math.floor(Math.random()*(b-a+1))+a;}
+function ini(n){return n.split(" ").map(w=>w[0]).join("").slice(0,2).toUpperCase();}
+
+// --- Data: Leadership ---
+const LDR = [
+  { name: "Priya Kumar", role: "Organiser", pts: 2140, rank: 3, dept: "CSE", yr: "3rd" },
+  { name: "Arjun Krishna", role: "Co-Organiser", pts: 1820, rank: 8, dept: "CSE", yr: "3rd" },
+  { name: "Meena Subramaniam", role: "Tech Lead", pts: 1540, rank: 14, dept: "ECE", yr: "Final" },
+  { name: "Vijay Pillai", role: "Event Manager", pts: 1290, rank: 22, dept: "MECH", yr: "2nd" },
+  { name: "Divya Mohan", role: "PR Head", pts: 1150, rank: 28, dept: "AIDS", yr: "2nd" }
+];
+
+function bldLdr() {
+  const cap = LDR[0];
+  document.getElementById("ltop").innerHTML = `
+    <div class="lcard cap">
+      <div class="lphoto" style="width:60px;height:60px;font-size:20px;">${ini(cap.name)}</div>
+      <div>
+        <span class="lrole">${cap.role}</span>
+        <div class="lname" style="font-size:18px;">${cap.name}</div>
+        <div style="font-size:11px;color:#666;">${cap.dept} · ${cap.yr} Year</div>
+      </div>
+      <div class="lstats" style="margin-left:auto;">
+        <div class="lstat"><div class="lsv">${cap.pts.toLocaleString()}</div><div class="lsl">Comm Pts</div></div>
+        <div class="lstat"><div class="lsv">#${cap.rank}</div><div class="lsl">Comm Rank</div></div>
+      </div>
+    </div>`;
+  
+  document.getElementById("lrest").innerHTML = LDR.slice(1).map(l => `
+    <div class="lcard sub">
+      <div class="lphoto" style="width:40px;height:40px;font-size:14px;">${ini(l.name)}</div>
+      <span class="lrole" style="background:#f5f5f3;color:#555;">${l.role}</span>
+      <span class="lname">${l.name}</span>
+      <div class="lstats">
+        <div class="lstat"><div class="lsv" style="font-size:12px;">${l.pts.toLocaleString()}</div><div class="lsl">Pts</div></div>
+        <div class="lstat"><div class="lsv" style="font-size:12px;">#${l.rank}</div><div class="lsl">Rank</div></div>
+      </div>
+    </div>`).join("");
+}
+
+// --- Data: 38 Members Generator ---
+const firstNames = ["Arun", "Lakshmi", "Bharath", "Kavitha", "Siva", "Deepa", "Rahul", "Sneha", "Karthik", "Nithya", "Suresh", "Mani", "Geetha", "Uma", "Bala", "Senthil", "Vani", "Jagan", "Kavi", "Raj", "Mukesh", "Preethi", "Santhosh", "Gowri", "Hari"];
+const lastNames = ["Sundaram", "Devi", "Nair", "Raman", "Krishnan", "Venkat", "Patel", "Iyer", "Raj", "Kumar", "Ramesh", "Pillai", "Murugan", "Subramaniam"];
+const tiers = ["purple", "blue", "blue", "orange", "orange"]; // Weighted distribution
+
+function bldMbr() {
+  let html = "";
+  for(let i=1; i<=38; i++) {
+    const name = `${firstNames[r(0, firstNames.length-1)]} ${lastNames[r(0, lastNames.length-1)]}`;
+    const tier = tiers[r(0, tiers.length-1)];
+    const oRank = r(15, 200);
+    const cPts = Math.max(50, 1000 - (i * 20) + r(-50, 50));
+    
+    html += `
+    <div class="mcard">
+      <div class="m-tier-bar ${tier}"></div>
+      <div class="mtop">
+        <div class="mpic">${ini(name)}</div>
+        <div>
+          <div class="mname">${name}</div>
+          <div class="msub">${tier.charAt(0).toUpperCase() + tier.slice(1)} Tier</div>
+        </div>
+      </div>
+      <div class="mstats-row">
+        <div class="ms-box"><span class="ms-lbl">Comm Pts</span><span class="ms-val" style="color:#0F6E56;">${cPts}</span></div>
+        <div class="ms-box" style="align-items:flex-end;"><span class="ms-lbl">Overall Rank</span><span class="ms-val">#${oRank}</span></div>
+      </div>
+    </div>`;
+  }
+  document.getElementById("mgrid").innerHTML = html;
+}
+
+// --- Data: Heatmap ---
+const VENUES = ["Innovation Hub", "Lab Block 101", "Design Studio", "Open Air Stage"];
+const HRS = [9,10,11,12,13,14,15,16,17];
+const hf = h => `${h>12?h-12:h}${h>=12?"PM":"AM"}`;
+const DN = ["Sun","Mon","Tue","Wed","Thu","Fri","Sat"];
+const TODAY = new Date(); TODAY.setHours(0,0,0,0);
+let hmd = new Date(TODAY);
+const EV_NAMES = ["Arduino Basics", "IoT Integration", "Drone Assembly", "Line Follower Logic", "Sensor Calibration", "Mech Design Review"];
+
+function dk(d){return`${d.getFullYear()}-${d.getMonth()}-${d.getDate()}`;}
+
+function bldChips(){
+  const w = document.getElementById("dcs"); w.innerHTML = "";
+  for(let i=-3; i<=6; i++){
+    const d = new Date(TODAY); d.setDate(TODAY.getDate()+i);
+    const isT = dk(d)===dk(TODAY), isSel = dk(d)===dk(hmd);
+    const c = document.createElement("div");
+    c.className = "dc" + (isSel?" sel":"") + (isT&&!isSel?" tod":"");
+    c.innerHTML = `<div class="dd">${DN[d.getDay()]}</div><div class="dn">${d.getDate()}</div>`;
+    c.onclick = () => { hmd = new Date(d); bldChips(); bldHm(); };
+    w.appendChild(c);
+  }
+}
+
+const hmCache = {};
+function eHm(d) {
+  const k = dk(d); if(hmCache[k]) return hmCache[k];
+  const data = {};
+  VENUES.forEach(v => {
+    data[v] = {};
+    HRS.forEach(h => {
+      if(Math.random() < 0.15) {
+        const cnt = r(8, 42); 
+        data[v][h] = { name: EV_NAMES[r(0, EV_NAMES.length-1)], cnt: cnt, lvl: r(1,3) };
+      } else { data[v][h] = null; }
+    });
+  });
+  hmCache[k] = data; return data;
+}
+
+function getShade(cnt) {
+  if(cnt < 15) return { bg: "#9FE1CB", fg: "#04342C", bd: "#5DCAA5" };
+  if(cnt < 25) return { bg: "#1D9E75", fg: "#fff", bd: "#148360" };
+  if(cnt < 35) return { bg: "#0F6E56", fg: "#fff", bd: "#0B5743" };
+  return { bg: "#085041", fg: "#fff", bd: "#053B30" };
+}
+
+function bldHm() {
+  const data = eHm(hmd);
+  let h = `<thead><tr><th class="hmcorner">Venue</th>`;
+  HRS.forEach(hr => { h += `<th class="hmhth">${hf(hr)}</th>`; });
+  h += `</tr></thead><tbody>`;
+  
+  VENUES.forEach(v => {
+    h += `<tr><td class="hmctd">${v}</td>`;
+    HRS.forEach(hr => {
+      const d = data[v][hr];
+      if(d) {
+        const sh = getShade(d.cnt);
+        h += `<td class="hmcell">
+          <div class="hmblock" style="background:${sh.bg}; border-color:${sh.bd};">
+            <div class="hm-ev-name" style="color:${sh.fg};">${d.name}</div>
+            <div class="hm-ev-pts" style="color:${sh.fg}; opacity:.9;">${d.cnt} / ${d.lvl===1?'L1':d.lvl===2?'L2':'L3'}</div>
+          </div>
+          <div class="tp">
+            <div style="font-size:12px;font-weight:700;margin-bottom:4px;">${d.name}</div>
+            <div style="color:#aaa;margin-bottom:2px;">Time: ${hf(hr)} - ${hf(hr+1)}</div>
+            <div style="color:#aaa;margin-bottom:2px;">Level: ${d.lvl}</div>
+            <div style="color:#aaa;">Registered: <span style="color:#fff;font-weight:700;">${d.cnt} members</span></div>
+          </div>
+        </td>`;
+      } else {
+        h += `<td class="hmcell"><div class="hmempty" onclick="document.getElementById('planModal').classList.add('open')"></div></td>`;
+      }
+    });
+    h += `</tr>`;
+  });
+  h += `</tbody>`;
+  document.getElementById("hmt").innerHTML = h;
+}
+
+// Init execution
+bldLdr();
+bldMbr();
+bldChips();
+bldHm();
+</script>
+</body>
+</html>
