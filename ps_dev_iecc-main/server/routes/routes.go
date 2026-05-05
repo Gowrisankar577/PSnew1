@@ -3,6 +3,7 @@ package routes
 import (
 	"os"
 	"ps_portal/api/auth"
+	"ps_portal/api/community"
 	"ps_portal/api/resource"
 	"ps_portal/handles"
 	"ps_portal/utils"
@@ -36,6 +37,13 @@ func SetupRouter() *gin.Engine {
 	//activity
 	router.GET(appBasePath+"/resources/activity", resource.GetMyActivity)
 	router.GET(appBasePath+"/resources/presentation", resource.GetMyPresentationView)
+
+	// community
+	router.GET(appBasePath+"/community/details", community.GetCommunityDetails)
+	router.GET(appBasePath+"/community/members", community.GetCommunityMembers)
+	router.GET(appBasePath+"/community/activities", community.GetCommunityActivities)
+	router.GET(appBasePath+"/community/events", community.GetCommunityEvents)
+	router.GET(appBasePath+"/community/targets", community.GetCommunityTargets)
 
 	return router
 }
